@@ -14,3 +14,16 @@ def fixed_size_chunks(text, size=500, overlap=50):
         chunks.append(text[start:start + size])
         start += size - overlap
     return chunks
+
+def section_chunks(text, source):
+    """Structure-aware method: one chunk per section, labelled with its report."""
+    title = text.splitlines()[0].lstrip("# ").strip()
+    chunks = []
+    for block in text.split("\n## ")[1:]:
+        heading, _, body = block.partition("\n")
+        chunks.append({
+            "source": source,
+            "section": heading.strip(),
+            "text": f"{title} - {heading.strip()}\n{body.strip()}",
+        })
+    return chunks
