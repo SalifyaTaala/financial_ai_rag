@@ -27,3 +27,10 @@ def section_chunks(text, source):
             "text": f"{title} - {heading.strip()}\n{body.strip()}",
         })
     return chunks
+
+def load_all_chunks(folder="data/reports"):
+    """Chunk every report in the folder by section. Returns one list of chunks."""
+    chunks = []
+    for path in sorted(Path(folder).glob("report_*.md")):
+        chunks += section_chunks(load_report(path), path.name)
+    return chunks

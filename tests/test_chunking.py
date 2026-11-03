@@ -29,3 +29,7 @@ def test_every_chunk_names_its_report(path):
 @pytest.mark.parametrize("path", REPORTS, ids=lambda p: p.name)
 def test_each_report_gives_six_chunks(path):
     assert len(section_chunks(load_report(path), path.name)) == 6
+
+def test_load_all_chunks_gives_twelve():
+    from src.chunking import load_all_chunks
+    assert len(load_all_chunks()) == 12
